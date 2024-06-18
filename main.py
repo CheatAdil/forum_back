@@ -7,7 +7,7 @@ print("main 10")
 from sqlalchemy.orm import Session
 print("main 1.2")
 
-
+from .database import SessionLocal, engine
 print("main 1.3")
 '''
 print("main 1.31")
@@ -20,7 +20,7 @@ print("main 1.33")
 from . import crud
 
 print("main 1.4")
-from .database import SessionLocal, engine
+
 print("main 1.5")
 models.Base.metadata.create_all(bind=engine)
 
