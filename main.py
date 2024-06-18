@@ -7,9 +7,13 @@ print("main 10")
 from sqlalchemy.orm import Session
 print("main 1.2")
 
-from .database import SessionLocal, engine
+
+from my_package import database
+
 print("main 1.3")
 '''
+
+from .database import SessionLocal, engine
 print("main 1.31")
 from . import models
 

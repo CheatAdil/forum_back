@@ -13,10 +13,6 @@
       {
         "src": "/(.*)",
         "dest": "main.py"
-      },
-      {
-        "src": "/(.database)",
-        "dest": "database.py"
       }
     ]
   }
