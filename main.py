@@ -49,7 +49,7 @@ print("main 3")
 app = FastAPI()
 
 print("print")
-'''
+
 
 @app.post("/token")
 async def login_for_access_token(
@@ -242,4 +242,3 @@ def delete_forum_post(current_user: Annotated[schemas.User, Depends(get_current_
     db_forum_post = crud.delete_forum_post(db, forum_post_id=forum_post_id)
     return db_forum_post
 
-'''
