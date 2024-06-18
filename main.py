@@ -4,7 +4,7 @@ print("main 0")
 print("main 10")
 
 print("main 1.2")
-from SQLAlchemy.orm import Session
+from sqlachemy.orm import Session
 
 print("main 1.3")
 
