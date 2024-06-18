@@ -2,7 +2,7 @@
 print("main 1")
 print("main 0")
 print("main 10")
-
+'''
 print("main 1.2")
 from sqlalchemy.orm import Session
 
@@ -236,4 +236,4 @@ def delete_forum_post(current_user: Annotated[schemas.User, Depends(get_current_
     db_forum_post = crud.delete_forum_post(db, forum_post_id=forum_post_id)
     return db_forum_post
 
-    
+'''
