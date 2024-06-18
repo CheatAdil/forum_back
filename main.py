@@ -3,12 +3,16 @@ print("main 1")
 
 
 from fastapi import Depends, FastAPI, HTTPException
+print("main 1.1")
 from fastapi.security import OAuth2PasswordBearer
+print("main 1.2")
 from sqlalchemy.orm import Session
 
-from . import crud, models, schemas, database
+print("main 1.3")
+from . import crud, models, schemas
+print("main 1.4")
 from .database import SessionLocal, engine
-
+print("main 1.5")
 models.Base.metadata.create_all(bind=engine)
 
 print("main 2")
