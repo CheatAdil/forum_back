@@ -16,12 +16,13 @@ print("main 1.3")
 from my_package.database import SessionLocal, engine
 print("main 1.31")
 from my_package import models
-'''
+
 print("main 1.32")
 
-from . import schemas
+from my_package import schemas
+'''
 print("main 1.33")
-from . import crud
+from my_package import crud
 
 print("main 1.4")
 
