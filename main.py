@@ -47,9 +47,18 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 print("main 3")
 
 app = FastAPI()
+print("main 4")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+print("main 5")
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-print("print")
-
+print("main 6")
 
 @app.post("/token")
 async def login_for_access_token(
