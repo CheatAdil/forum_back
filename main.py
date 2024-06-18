@@ -35,7 +35,7 @@ def get_db():
         yield db
     finally:
         db.close()
-'''
+
 @app.get("/items/")
 async def read_items(token: Annotated[str, Depends(oauth2_scheme)]):
     return {"token": token}
@@ -230,5 +230,3 @@ def update_forum_post(current_user: Annotated[schemas.User, Depends(get_current_
 def delete_forum_post(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_post_id: int, db: Session = Depends(get_db)):
     db_forum_post = crud.delete_forum_post(db, forum_post_id=forum_post_id)
     return db_forum_post
-
-    '''
