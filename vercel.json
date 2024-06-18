@@ -1,9 +1,22 @@
 {
-
+    "builds": [
+      {
+        "src": "main.py",
+        "use": "@vercel/python",
+        "config": {
+          "runtime": "python3.9",
+          "maxLambdaSize": "1024mb"
+      }
+      }
+    ],
     "routes": [
       {
         "src": "/(.*)",
         "dest": "main.py"
+      },
+      {
+        "src": "/(.database)",
+        "dest": "database.py"
       }
     ]
   }
