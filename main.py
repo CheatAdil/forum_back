@@ -23,21 +23,12 @@ from my_package import schemas
 
 print("main 1.33")
 from my_package import crud
-'''
-print("main 1.4")
 
-print("main 1.5")
+
 models.Base.metadata.create_all(bind=engine)
 
-print("main 2")
-
-#
 
 
-
-
-
-'''
 from my_package import auth
 from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
 
