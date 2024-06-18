@@ -10,7 +10,14 @@ print("main 1.2")
 from sqlalchemy.orm import Session
 
 print("main 1.3")
-from . import crud, models, schemas
+from . import crud
+print("main 1.31")
+from . import models
+print("main 1.32")
+from . import schemas
+
+
+
 print("main 1.4")
 from .database import SessionLocal, engine
 print("main 1.5")
