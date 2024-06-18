@@ -11,17 +11,17 @@ print("main 1.2")
 from my_package import database
 
 print("main 1.3")
-'''
 
-from .database import SessionLocal, engine
+
+from database import SessionLocal, engine
 print("main 1.31")
-from . import models
+from my_package import models
 
 print("main 1.32")
 
-from . import schemas
+from my_package import schemas
 print("main 1.33")
-from . import crud
+from my_package import crud
 
 print("main 1.4")
 
@@ -36,7 +36,7 @@ print("main 2")
 
 from . import auth
 from .auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
-'''
+
 from datetime import timedelta
 from typing import Annotated
 
