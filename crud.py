@@ -1,6 +1,6 @@
 print(" crud")
 
-from sqlalchemy.orm import Session
+from SQLAlchemy.orm import Session
 
 from . import models, schemas
 from .hash import get_password_hash
