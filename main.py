@@ -30,12 +30,13 @@ from datetime import timedelta
 from typing import Annotated
 
 from . import auth
+'''
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from .auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
 
-'''
+
 ##
 
 print("main 3")
