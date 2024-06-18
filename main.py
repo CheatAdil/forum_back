@@ -1,3 +1,6 @@
+print("main 1")
+
+
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
@@ -7,7 +10,7 @@ from .database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
-
+print("main 2")
 
 #
 
@@ -22,6 +25,8 @@ from .auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_
 
 
 ##
+
+print("main 3")
 
 app = FastAPI()
 
