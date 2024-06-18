@@ -10,10 +10,12 @@ print("main 1.2")
 from sqlalchemy.orm import Session
 
 print("main 1.3")
-'''
+
 print("main 1.31")
 from . import models
+
 print("main 1.32")
+'''
 from . import schemas
 print("main 1.33")
 from . import crud
@@ -22,7 +24,7 @@ print("main 1.4")
 from .database import SessionLocal, engine
 print("main 1.5")
 models.Base.metadata.create_all(bind=engine)
-
+'''
 print("main 2")
 
 #
@@ -237,4 +239,4 @@ def delete_forum_post(current_user: Annotated[schemas.User, Depends(get_current_
     db_forum_post = crud.delete_forum_post(db, forum_post_id=forum_post_id)
     return db_forum_post
 
-    '''
+    
