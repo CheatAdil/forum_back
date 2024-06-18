@@ -24,7 +24,7 @@ print("main 1.4")
 from .database import SessionLocal, engine
 print("main 1.5")
 models.Base.metadata.create_all(bind=engine)
-'''
+
 print("main 2")
 
 #
@@ -37,7 +37,7 @@ from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from .auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
-
+'''
 
 ##
 
