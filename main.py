@@ -10,7 +10,7 @@ print("main 1.2")
 from sqlalchemy.orm import Session
 
 print("main 1.3")
-
+'''
 print("main 1.31")
 from . import models
 print("main 1.32")
@@ -236,3 +236,5 @@ def update_forum_post(current_user: Annotated[schemas.User, Depends(get_current_
 def delete_forum_post(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_post_id: int, db: Session = Depends(get_db)):
     db_forum_post = crud.delete_forum_post(db, forum_post_id=forum_post_id)
     return db_forum_post
+
+    '''
