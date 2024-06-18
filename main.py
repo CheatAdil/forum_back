@@ -1,6 +1,7 @@
 
 print("main 1")
-
+print("main 0")
+print("main 10")
 
 from fastapi import Depends, FastAPI, HTTPException
 print("main 1.1")
