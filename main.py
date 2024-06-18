@@ -36,10 +36,10 @@ print("main 2")
 
 
 
-from .auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
+
 '''
 from my_package import auth
-
+from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
 
 from datetime import timedelta
 from typing import Annotated
