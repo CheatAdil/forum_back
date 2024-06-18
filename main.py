@@ -3,9 +3,6 @@ print("main 1")
 print("main 0")
 print("main 10")
 
-from fastapi import Depends, FastAPI, HTTPException
-print("main 1.1")
-from fastapi.security import OAuth2PasswordBearer
 print("main 1.2")
 from sqlalchemy.orm import Session
 
@@ -15,7 +12,7 @@ print("main 1.31")
 from . import models
 
 print("main 1.32")
-'''
+
 from . import schemas
 print("main 1.33")
 from . import crud
@@ -32,12 +29,12 @@ print("main 2")
 from datetime import timedelta
 from typing import Annotated
 
-from . import schemas, auth
+from . import auth
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from .auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
-'''
+
 
 ##
 
