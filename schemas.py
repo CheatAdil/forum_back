@@ -1,3 +1,5 @@
+print("schemas ")
+
 from pydantic import BaseModel
 
 class UserBase(BaseModel):
