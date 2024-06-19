@@ -29,7 +29,7 @@ from jwt.exceptions import InvalidTokenError
 
 from .database import SessionLocal
 
-SECRET_KEY = "803b77b07f60a79bd7fd6c163fe6b5928c85ba7fc6e7e592b2e10013f7a6be2f"
+SECRET_KEY = str(os.getenv("SECRET_KEY"))
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
