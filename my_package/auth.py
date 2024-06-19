@@ -14,21 +14,12 @@ from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 from jwt.exceptions import InvalidTokenError
 
-from .database import SessionLocal
+from .database import get_db
 
 SECRET_KEY = get_var("SECRET_KEY")
 ALGORITHM = get_var("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(get_var("ACCESS_TOKEN_EXPIRE_MINUTES"))
 CRYPT_SCHEME = get_var("CRYPT_SCHEME")
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        print("got db")
-        yield db
-    finally:
-        db.close()
 
 class Token(BaseModel):
     access_token: str
