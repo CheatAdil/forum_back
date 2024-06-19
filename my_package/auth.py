@@ -30,8 +30,8 @@ from jwt.exceptions import InvalidTokenError
 from .database import SessionLocal
 
 SECRET_KEY = str(os.getenv("SECRET_KEY"))
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ALGORITHM = str(os.getenv("ALGORITHM"))
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 # Dependency
 def get_db():
