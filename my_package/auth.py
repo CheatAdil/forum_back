@@ -19,6 +19,7 @@ from .database import SessionLocal
 SECRET_KEY = get_var("SECRET_KEY")
 ALGORITHM = get_var("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(get_var("ACCESS_TOKEN_EXPIRE_MINUTES"))
+CRYPT_SCHEME = get_var("CRYPT_SCHEME")
 
 # Dependency
 def get_db():
@@ -38,7 +39,7 @@ class TokenData(BaseModel):
     user_email: Union[str, None] = None
 
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=[CRYPT_SCHEME], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
