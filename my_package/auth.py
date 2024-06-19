@@ -9,7 +9,7 @@ from dotenv import load_dotenv, dotenv_values
 load_dotenv() 
  
 # accessing and printing value
-print(os.getenv("SECRET_KEY"))
+print("SECRET_KEY = " + str(os.getenv("SECRET_KEY")))
 
 
 from datetime import datetime, timedelta, timezone
