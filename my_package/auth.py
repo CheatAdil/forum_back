@@ -1,17 +1,10 @@
-# importing os module for environment variables
-import os
-# importing necessary functions from dotenv library
-from dotenv import load_dotenv, dotenv_values 
-# loading variables from .env file
-load_dotenv() 
-
-
 from datetime import datetime, timedelta, timezone
 from typing import Annotated, Union
 from sqlalchemy.orm import Session
 
 from . import schemas, auth
 from .crud import get_user_by_email
+from .environment_variables import get_var
 
 
 import jwt
@@ -23,9 +16,9 @@ from jwt.exceptions import InvalidTokenError
 
 from .database import SessionLocal
 
-SECRET_KEY = str(os.getenv("SECRET_KEY"))
-ALGORITHM = str(os.getenv("ALGORITHM"))
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
+SECRET_KEY = get_var("SECRET_KEY")
+ALGORITHM = get_var("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(get_var("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 # Dependency
 def get_db():
