@@ -49,17 +49,14 @@ def verify_password(plain_password, user_password):
     #print("user password = " + str(user_password))
     return pwd_context.verify(plain_password, user_password)
 
-
 def get_password_hash(password):
     return pwd_context.hash(password)
-
 
 def get_user(db, user_name: str, ):
     
     if get_user_by_email(db, user_email=user_name):
         user_dict = db[user_name]
         return schemas.User(**user_dict)
-
 
 def authenticate_user(db_user, user_name: str, password: str):
 
@@ -72,7 +69,6 @@ def authenticate_user(db_user, user_name: str, password: str):
     if not verify_password(password, db_user.user_password):
         return False
     return db_user
-
 
 def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None):
     to_encode = data.copy()
@@ -106,7 +102,6 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
         print("user is none, raising credentials_exception")
         raise credentials_exception
     yield user
-
 
 async def get_current_active_user( 
     current_user: Annotated[schemas.User, Depends(get_current_user)],
