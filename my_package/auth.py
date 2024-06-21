@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated, Union
 from sqlalchemy.orm import Session
 
-from . import schemas, auth
+from . import schemas, password_handler
 from .crud import get_user_by_email
 from .environment_variables import get_var
 
@@ -30,24 +30,7 @@ class TokenData(BaseModel):
     user_email: Union[str, None] = None
 
 
-pwd_context = CryptContext(schemes=[CRYPT_SCHEME], deprecated="auto")
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-
-def verify_password(plain_password, user_password):
-    #print("plain password = " + str(plain_password))
-    #print("user password = " + str(user_password))
-    return pwd_context.verify(plain_password, user_password)
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
-
-def get_user(db, user_name: str, ):
-    
-    if get_user_by_email(db, user_email=user_name):
-        user_dict = db[user_name]
-        return schemas.User(**user_dict)
 
 def authenticate_user(db_user, user_name: str, password: str):
 
@@ -57,7 +40,7 @@ def authenticate_user(db_user, user_name: str, password: str):
     if not db_user:
         #print("not user")
         return False
-    if not verify_password(password, db_user.user_password):
+    if not password_handler.verify_password(password, db_user.user_password):
         return False
     return db_user
 
@@ -72,7 +55,6 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
     return encoded_jwt
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
-    #print("get current user")
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
