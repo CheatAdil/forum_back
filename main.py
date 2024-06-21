@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from sqlalchemy.orm import Session
 
-from my_package import models, schemas, crud, auth
+from my_package import models, schemas, crud, auth, tokens
 from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
 from my_package.database import get_db, engine
 
@@ -18,7 +18,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 @app.post("/token")
 async def login_for_access_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Session = Depends(get_db),
-) -> auth.Token:
+) -> tokens.Token:
     db_user = crud.get_user_by_email(db, user_email=form_data.username)
     user = authenticate_user(db_user, form_data.username, form_data.password)
     if not user:
@@ -31,7 +31,7 @@ async def login_for_access_token(
     access_token = create_access_token(
         data={"sub": user.user_email}, expires_delta=access_token_expires
     )
-    return auth.Token(access_token=access_token, token_type="bearer")
+    return tokens.Token(access_token=access_token, token_type="bearer")
 
 #users
 @app.get("/users/{user_email}", response_model=schemas.User)
