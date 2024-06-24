@@ -1,13 +1,13 @@
 from typing import Annotated
 
-from fastapi import Depends, FastAPI, HTTPException, APIRouter
+from fastapi import Depends, HTTPException, APIRouter
 
 from sqlalchemy.orm import Session
 
 from my_package import crud
-from my_package.entities import models, schemas, tokens
-from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
-from my_package.database import get_db, engine
+from my_package.entities import schemas
+from my_package.auth import get_current_user
+from my_package.database import get_db
 
 user_router = APIRouter(
     prefix="/users", tags=["user"]
