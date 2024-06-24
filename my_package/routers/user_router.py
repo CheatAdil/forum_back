@@ -17,34 +17,34 @@ user_router = APIRouter(
 
 
 #users
-@user_router.get("/users/{user_email}", response_model=schemas.User)
+@user_router.get("/{user_email}", response_model=schemas.User)
 def check_user(current_user: Annotated[schemas.User, Depends(get_current_user)]):
     return current_user
-@app.post("/users/", response_model=schemas.User)
+@user_router.post("/", response_model=schemas.User)
 def create_user(current_user: Annotated[schemas.User, Depends(get_current_user)], user: schemas.UserCreate, db: Session = Depends(get_db) ):
 
     db_user = crud.get_user_by_email(db, user_email=user.user_email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
-@app.get("/users/", response_model=list[schemas.User])
+@user_router.get("/", response_model=list[schemas.User])
 def read_users(current_user: Annotated[schemas.User, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
-@app.get("/users/{user_id}", response_model=schemas.User)
+@user_router.get("/{user_id}", response_model=schemas.User)
 def read_user(current_user: Annotated[schemas.User, Depends(get_current_user)], user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
-@app.put("/users/{user_id}", response_model=schemas.User)
+@user_router.put("/{user_id}", response_model=schemas.User)
 def update_user(current_user: Annotated[schemas.User, Depends(get_current_user)], user: schemas.UserUpdate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, user_email=user.user_email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.update_user(db=db, user=user)
-@app.delete("/users/{user_id}", response_model=schemas.User)
+@user_router.delete("/{user_id}", response_model=schemas.User)
 def delete_user(current_user: Annotated[schemas.User, Depends(get_current_user)], user_id: int, db: Session = Depends(get_db)):
     db_user = crud.delete_user(db, user_id=user_id)
     #if db_user is None:
