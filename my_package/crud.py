@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from . import models, schemas
-from .hash import get_password_hash
+from .password_handler import get_password_hash
 
 #user
 def get_user(db: Session, user_id: int): #
