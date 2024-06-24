@@ -2,13 +2,10 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated, Union
 from sqlalchemy.orm import Session
 
-from . import schemas, tokens
-from .password_handler import verify_password, get_password_hash
-from .crud import get_user_by_email
+from . import schemas, tokens, password_handler, crud
 from .environment_variables import get_var
 
 import jwt
-from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 from jwt.exceptions import InvalidTokenError
@@ -21,13 +18,11 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(get_var("ACCESS_TOKEN_EXPIRE_MINUTES"))
 CRYPT_SCHEME = get_var("CRYPT_SCHEME")
 
 
-pwd_context = CryptContext(schemes=[CRYPT_SCHEME], deprecated="auto")
-
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def get_user(db, user_name: str, ):
     
-    if get_user_by_email(db, user_email=user_name):
+    if crud.get_user_by_email(db, user_email=user_name):
         user_dict = db[user_name]
         return schemas.User(**user_dict)
 
@@ -39,7 +34,7 @@ def authenticate_user(db_user, user_name: str, password: str):
     if not db_user:
         #print("not user")
         return False
-    if not verify_password(password, db_user.user_password):
+    if not password_handler.verify_password(password, db_user.user_password):
         return False
     return db_user
 
@@ -70,7 +65,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
     except InvalidTokenError:
         print("InvalidTokenError, raising credentials_exception")
         raise credentials_exception
-    user = get_user_by_email(db, user_email=token_data.user_email)
+    user = crud.get_user_by_email(db, user_email=token_data.user_email)
     if user is None:
         print("user is none, raising credentials_exception")
         raise credentials_exception

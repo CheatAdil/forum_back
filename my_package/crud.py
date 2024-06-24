@@ -3,13 +3,15 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 from .password_handler import get_password_hash
 
+from crud import user
+
 #user
 def get_user(db: Session, user_id: int): #
-    return db.query(models.User).filter(models.User.user_id == user_id).first()
+    return user.get_user(db, user_id)
 def get_user_by_email(db: Session, user_email: str):
     return db.query(models.User).filter(models.User.user_email == user_email).first()
 def get_users(db: Session, skip: int = 0, limit: int = 100): #
-    return db.query(models.User).offset(skip).limit(limit).all()
+    return user.get_users(db, skip, limit)
 def create_user(db: Session, user: schemas.UserCreate): #
     db_user = models.User(user_email=user.user_email, user_password=get_password_hash(user.user_password), user_name=user.user_name)
     db.add(db_user)
