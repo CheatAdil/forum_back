@@ -2,7 +2,8 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated, Union
 from sqlalchemy.orm import Session
 
-from . import schemas, auth, tokens
+from . import schemas, tokens
+from .password_handler import verify_password, get_password_hash
 from .crud import get_user_by_email
 from .environment_variables import get_var
 
@@ -23,15 +24,6 @@ CRYPT_SCHEME = get_var("CRYPT_SCHEME")
 pwd_context = CryptContext(schemes=[CRYPT_SCHEME], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
-
-def verify_password(plain_password, user_password):
-    #print("plain password = " + str(plain_password))
-    #print("user password = " + str(user_password))
-    return pwd_context.verify(plain_password, user_password)
-
-def get_password_hash(password):
-    return pwd_context.hash(password)
 
 def get_user(db, user_name: str, ):
     
