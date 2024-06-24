@@ -19,14 +19,18 @@ user_router = APIRouter(
 def check_user(current_user: Annotated[user_schema.User, Depends(get_current_user)]):
     return current_user.user_id
 @user_router.post("/", response_model=user_schema.User)
-def create_user(user: user_schema.UserCreate, db: Session = Depends(get_db) ):
-    print(check_user)
+def create_user(current_user: Annotated[user_schema.User, Depends(get_current_user)], user: user_schema.UserCreate, db: Session = Depends(get_db) ):
+    
     db_user = crud.get_user_by_email(db, user_email=user.user_email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
 @user_router.get("/", response_model=list[user_schema.User])
-def read_users(current_user: Annotated[user_schema.User, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+
+    print("##############################")
+    print(check_user)
+    print("##############################")
 
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
