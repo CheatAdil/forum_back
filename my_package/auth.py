@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated, Union
 from sqlalchemy.orm import Session
 
-from . import schemas, auth
+from . import schemas, auth, tokens
 from .crud import get_user_by_email
 from .environment_variables import get_var
 
@@ -84,7 +84,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
         if user_email is None:
             print("user email is none, raising credentials_exception")
             raise credentials_exception
-        token_data = auth.TokenData(user_email=user_email)
+        token_data = tokens.TokenData(user_email=user_email)
     except InvalidTokenError:
         print("InvalidTokenError, raising credentials_exception")
         raise credentials_exception
