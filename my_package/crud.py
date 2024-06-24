@@ -3,8 +3,6 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 from .password_handler import get_password_hash
 
-from crud import user
-
 #user
 def get_user(db: Session, user_id: int): #
     return db.query(models.User).filter(models.User.user_id == user_id).first()
