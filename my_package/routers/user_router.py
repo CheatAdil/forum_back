@@ -29,7 +29,7 @@ def create_user(current_user: Annotated[user_schema.User, Depends(get_current_us
 def read_users(current_user: Annotated[user_schema.User, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
     print("##############################")
-    print("user id = " + current_user.user_id)
+    #print("user id = " + current_user.user_id)
     print("##############################")
 
     users = crud.get_users(db, skip=skip, limit=limit)
