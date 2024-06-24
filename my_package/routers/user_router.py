@@ -19,8 +19,8 @@ user_router = APIRouter(
 def check_user(current_user: Annotated[user_schema.User, Depends(get_current_user)]):
     return current_user
 @user_router.post("/", response_model=user_schema.User)
-def create_user(current_user: Annotated[user_schema.User, Depends(get_current_user)], user: user_schema.UserCreate, db: Session = Depends(get_db) ):
-
+def create_user(user: user_schema.UserCreate, db: Session = Depends(get_db) ):
+    print(check_user)
     db_user = crud.get_user_by_email(db, user_email=user.user_email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
