@@ -36,6 +36,9 @@ async def login_for_access_token(
     )
     return tokens.Token(access_token=access_token, token_type="bearer")
 
+app.include_router(user_router)
+
+'''
 #users
 @app.get("/users/{user_email}", response_model=schemas.User)
 def check_user(current_user: Annotated[schemas.User, Depends(get_current_user)]):
@@ -70,7 +73,7 @@ def delete_user(current_user: Annotated[schemas.User, Depends(get_current_user)]
     #if db_user is None:
     #    raise HTTPException(status_code=404, detail="User not found")
     return db_user
-
+'''
 #categories
 @app.post("/categories/", response_model=schemas.Category)
 def create_category(current_user: Annotated[schemas.User, Depends(get_current_user)], category: schemas.CategoryCreate, db: Session = Depends(get_db)):
