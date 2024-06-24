@@ -2,13 +2,13 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated, Union
 from sqlalchemy.orm import Session
 
-from . import schemas, tokens, password_handler, crud
+from . import schemas, tokens, password_handler
+from .crud import get_user_by_email
 from .environment_variables import get_var
 
 import jwt
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
-from jwt.exceptions import InvalidTokenError
 
 from .database import get_db
 
@@ -22,7 +22,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 def get_user(db, user_name: str, ):
     
-    if crud.get_user_by_email(db, user_email=user_name):
+    if get_user_by_email(db, user_email=user_name):
         user_dict = db[user_name]
         return schemas.User(**user_dict)
 
@@ -62,10 +62,10 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
             print("user email is none, raising credentials_exception")
             raise credentials_exception
         token_data = tokens.TokenData(user_email=user_email)
-    except InvalidTokenError:
+    except jwt.exceptions.InvalidTokenError:
         print("InvalidTokenError, raising credentials_exception")
         raise credentials_exception
-    user = crud.get_user_by_email(db, user_email=token_data.user_email)
+    user = get_user_by_email(db, user_email=token_data.user_email)
     if user is None:
         print("user is none, raising credentials_exception")
         raise credentials_exception
