@@ -6,13 +6,15 @@ from sqlalchemy.orm import Session
 
 from my_package import crud
 from my_package.entities import schemas
+
+from my_package.entities.schemasss import user_schema
+
 from my_package.auth import get_current_user
 from my_package.database import get_db
 
 user_router = APIRouter(
     prefix="/users", tags=["user"]
 )
-
 
 #users
 @user_router.get("/{user_email}", response_model=schemas.User)
@@ -25,8 +27,8 @@ def create_user(current_user: Annotated[schemas.User, Depends(get_current_user)]
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_user(db=db, user=user)
-@user_router.get("/", response_model=list[schemas.User])
-def read_users(current_user: Annotated[schemas.User, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+@user_router.get("/", response_model=list[user_schema.User])
+def read_users(current_user: Annotated[user_schema.User, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
     users = crud.get_users(db, skip=skip, limit=limit)
     return users
