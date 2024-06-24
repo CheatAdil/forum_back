@@ -17,7 +17,7 @@ user_router = APIRouter(
 #users
 @user_router.get("/{user_email}", response_model=user_schema.User)
 def check_user(current_user: Annotated[user_schema.User, Depends(get_current_user)]):
-    return current_user
+    return current_user.user_id
 @user_router.post("/", response_model=user_schema.User)
 def create_user(user: user_schema.UserCreate, db: Session = Depends(get_db) ):
     print(check_user)
