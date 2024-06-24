@@ -11,7 +11,7 @@ from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, crea
 from my_package.database import get_db, engine
 
 models.Base.metadata.create_all(bind=engine)
-
+#yes
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
