@@ -12,7 +12,7 @@ from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, crea
 from my_package.database import get_db, engine
 
 user_router = APIRouter(
-    prefix="/users/", tags=["author"]
+    prefix="/users", tags=["author"]
 )
 
 
