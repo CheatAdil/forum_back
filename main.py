@@ -31,7 +31,7 @@ async def login_for_access_token(
     access_token = create_access_token(
         data={"sub": user.user_email}, expires_delta=access_token_expires
     )
-    return auth.Token(access_token=access_token, token_type="bearer")
+    return tokens.Token(access_token=access_token, token_type="bearer")
 
 #users
 @app.get("/users/{user_email}", response_model=schemas.User)
