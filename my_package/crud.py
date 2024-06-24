@@ -7,11 +7,11 @@ from crud import user
 
 #user
 def get_user(db: Session, user_id: int): #
-    return user.get_user(db, user_id)
+    return db.query(models.User).filter(models.User.user_id == user_id).first()
 def get_user_by_email(db: Session, user_email: str):
     return db.query(models.User).filter(models.User.user_email == user_email).first()
 def get_users(db: Session, skip: int = 0, limit: int = 100): #
-    return user.get_users(db, skip, limit)
+    return db.query(models.User).offset(skip).limit(limit).all()
 def create_user(db: Session, user: schemas.UserCreate): #
     db_user = models.User(user_email=user.user_email, user_password=get_password_hash(user.user_password), user_name=user.user_name)
     db.add(db_user)
