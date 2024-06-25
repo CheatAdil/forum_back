@@ -3,7 +3,8 @@ from typing import Annotated, Union
 from sqlalchemy.orm import Session
 
 from . import password_handler
-from .entities import schemas, tokens
+from .entities import tokens
+from .entities.e_schemas import user_schemas
 from .cruds.user_crud import get_user_by_email
 from .environment_variables import get_var
 
@@ -25,7 +26,7 @@ def get_user(db, user_name: str, ):
     
     if get_user_by_email(db, user_email=user_name):
         user_dict = db[user_name]
-        return schemas.User(**user_dict)
+        return user_schemas.User(**user_dict)
 
 def authenticate_user(db_user, user_name: str, password: str):
 
@@ -73,10 +74,10 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
     yield user
 
 async def get_current_active_user( 
-    current_user: Annotated[schemas.User, Depends(get_current_user)],
+    current_user: Annotated[user_schemas.User, Depends(get_current_user)],
 ):
-    #if current_user.disabled:
-        #raise HTTPException(status_code=400, detail="Inactive user")
+    if current_user.disabled:
+        raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 
 
