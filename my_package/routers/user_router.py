@@ -40,7 +40,7 @@ def read_user(current_user: Annotated[user_schema.User, Depends(get_current_user
     print("user id = " + user_id)
     print("##############################")
     
-    db_user = crud.get_user(db, user_id=user_id)
+    db_user = crud.get_user(db, user_id=10)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
