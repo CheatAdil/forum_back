@@ -12,6 +12,7 @@ from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, crea
 from my_package.database import get_db, engine
 
 from my_package.routers.user_router import user_router
+from my_package.routers.category_router import category_router
 
 models.Base.metadata.create_all(bind=engine)
 #yes
@@ -37,7 +38,7 @@ async def login_for_access_token(
     return tokens.Token(access_token=access_token, token_type="bearer")
 
 app.include_router(user_router)
-
+app.include_router(category_router)
 
 
 #forums
