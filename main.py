@@ -41,35 +41,6 @@ app.include_router(user_router)
 app.include_router(category_router)
 
 
-#forums
-@app.post("/forums/", response_model=schemas.Forum)
-def create_forum(current_user: Annotated[schemas.User, Depends(get_current_user)], forum: schemas.ForumCreate, db: Session = Depends(get_db)):
-    db_forum = crud.get_forum_by_name(db, forum_name=forum.forum_name)
-    if db_forum:
-        raise HTTPException(status_code=400, detail="forum already registered")
-    return crud.create_forum(db=db, forum=forum)
-@app.get("/forums/", response_model=list[schemas.Forum])
-def read_forums(current_user: Annotated[schemas.User, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    forums = crud.get_forums(db, skip=skip, limit=limit)
-    return forums
-@app.get("/forums/{forum_id}", response_model=schemas.Forum)
-def read_forum(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_id: int, db: Session = Depends(get_db)):
-    db_forum = crud.get_forum(db, forum_id=forum_id)
-    if db_forum is None:
-        raise HTTPException(status_code=404, detail="Forum not found")
-    return db_forum
-@app.put("/forums/{forum_id}", response_model=schemas.Forum)
-def update_forum(current_user: Annotated[schemas.User, Depends(get_current_user)], forum: schemas.ForumUpdate, db: Session = Depends(get_db)):
-    db_forum = crud.get_forum_by_name(db, forum_name=forum.forum_name)
-    #if db_forum:
-        #raise HTTPException(status_code=400, detail="Email already registered")
-    return crud.update_forum(db=db, forum=forum)
-@app.delete("/forums/{forum_id}", response_model=schemas.Forum)
-def delete_forum(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_id: int, db: Session = Depends(get_db)):
-    db_forum = crud.delete_forum(db, forum_id=forum_id)
-    #if db_forum is None:
-    #    raise HTTPException(status_code=404, detail="Forum not found")
-    return db_forum
 
 #forums_and_admins
 @app.post("/forums_and_admins/", response_model=schemas.Forum_and_adminBase)
