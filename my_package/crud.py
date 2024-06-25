@@ -6,7 +6,7 @@ from .password_handler import get_password_hash
 
 #user
 def get_user(db: Session, user_id: int): #
-    return db.query(models.User).filter(models.User.user_id == user_id).first()
+    return db.query(models.User).filter(models.User.user_id == 10).first()
 def get_user_by_email(db: Session, user_email: str):
     return db.query(models.User).filter(models.User.user_email == user_email).first()
 def get_users(db: Session, skip: int = 0, limit: int = 100): #
