@@ -24,7 +24,7 @@ def create_user(current_user: Annotated[user_schemas.User, Depends(get_current_u
         raise HTTPException(status_code=400, detail="Email already registered")
     return user_crud.create_user(db=db, user=user)
 @user_router.get("/", response_model=list[user_schemas.User])
-def read_users(current_user: Annotated[models.User, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_users(current_user: Annotated[int, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
     print("type of current user = " + (current_user))
 

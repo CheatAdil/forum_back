@@ -70,7 +70,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Se
     if user is None:
         print("user is none, raising credentials_exception")
         raise credentials_exception
-    yield user
+    yield user.user_id
 
 async def get_current_active_user( 
     current_user: Annotated[schemas.User, Depends(get_current_user)],
