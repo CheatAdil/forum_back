@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from . import password_handler
 from .entities import schemas, tokens
-from .crud import get_user_by_email
+from .cruds.user_crud import get_user_by_email
 from .environment_variables import get_var
 
 import jwt
