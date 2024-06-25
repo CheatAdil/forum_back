@@ -13,6 +13,8 @@ from my_package.database import get_db, engine
 
 from my_package.routers.user_router import user_router
 from my_package.routers.category_router import category_router
+from my_package.routers.forum_router import forum_router
+from my_package.routers.forums_and_admins_router import forums_and_admins_router
 
 models.Base.metadata.create_all(bind=engine)
 #yes
@@ -39,32 +41,10 @@ async def login_for_access_token(
 
 app.include_router(user_router)
 app.include_router(category_router)
+app.include_router(forum_router)
+app.include_router(forums_and_admins_router)
 
 
-
-#forums_and_admins
-@app.post("/forums_and_admins/", response_model=schemas.Forum_and_adminBase)
-def create_forum_and_admin(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_and_admin: schemas.Forum_and_adminBase, db: Session = Depends(get_db)):
-    crud.create_forum_and_admin(db=db, forum_and_admin=forum_and_admin)
-    return 0
-@app.get("/forums_and_admins/", response_model=list[schemas.Forum_and_adminBase])
-def read_forums_and_admins(current_user: Annotated[schemas.User, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    forums = crud.get_forums_and_admins(db, skip=skip, limit=limit)
-    return forums
-@app.get("/forum_and_admin/{forum_and_admin_id}", response_model=schemas.Forum_and_admin)
-def read_forum_and_admin(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_and_admin_id: int, db: Session = Depends(get_db)):
-    db_forum_and_admin = crud.get_forum_and_admin(db, forum_and_admin_id=forum_and_admin_id)
-    if db_forum_and_admin is None:
-        raise HTTPException(status_code=404, detail="Forum_and_admin not found")
-    return db_forum_and_admin
-@app.put("/forums_and_admins/{forum_and_admin_id}", response_model=schemas.Forum_and_admin)
-def update_forum_and_admin(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_and_admin: schemas.Forum_and_adminUpdate, db: Session = Depends(get_db)):
-    db_forum_and_admin = crud.get_forum_and_admin(db, forum_and_admin_id=forum_and_admin.forum_and_admin_id)
-    return crud.update_forum_and_admin(db=db, forum_and_admin=forum_and_admin)
-@app.delete("/forums_and_admins/{forum_and_admin_id}", response_model=schemas.Forum_and_admin)
-def delete_forum_and_admin(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_and_admin_id: int, db: Session = Depends(get_db)):
-    db_forum_and_admin = crud.delete_forum_and_admin(db, forum_and_admin_id=forum_and_admin_id)
-    return db_forum_and_admin
 
 #forum_posts
 @app.post("/forum_posts/", response_model=schemas.Forum_postCreate)
