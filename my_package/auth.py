@@ -35,7 +35,8 @@ def authenticate_user(db_user, user_name: str, password: str):
     if not db_user:
         #print("not user")
         return False
-    if not password_handler.verify_password(password, db_user.user_password):
+    ps = password_handler
+    if not ps.verify_password(password, db_user.user_password):
         return False
     return db_user
 
