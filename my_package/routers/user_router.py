@@ -13,7 +13,7 @@ from my_package.database import get_db
 user_router = APIRouter(
     prefix="/users", tags=["user"]
 )
-
+###
 #users
 @user_router.get("/{user_email}", response_model=user_schema.User)
 def check_user(current_user: Annotated[user_schema.User, Depends(get_current_user)]):
