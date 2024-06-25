@@ -123,7 +123,7 @@ def delete_forum_and_admin(db: Session, forum_and_admin_id: int): #
     db.commit()
     return db_forum_and_admin
 
-#forum
+#forum post
 def get_forum_post(db: Session, forum_post_id: int): #
     return db.query(models.Forum_post).filter(models.Forum_post.forum_post_id == forum_post_id).first()
 def get_forum_posts(db: Session, skip: int = 0, limit: int = 100): #
