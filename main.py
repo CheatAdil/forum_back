@@ -7,14 +7,15 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from my_package import crud
-from my_package.entities import models, schemas, tokens
-from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_user
+from my_package.entities import models, tokens
+from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token
 from my_package.database import get_db, engine
 
 from my_package.routers.user_router import user_router
 from my_package.routers.category_router import category_router
 from my_package.routers.forum_router import forum_router
 from my_package.routers.forums_and_admins_router import forums_and_admins_router
+from my_package.routers.forum_posts_router import forum_posts_router
 
 models.Base.metadata.create_all(bind=engine)
 #yes
@@ -43,30 +44,5 @@ app.include_router(user_router)
 app.include_router(category_router)
 app.include_router(forum_router)
 app.include_router(forums_and_admins_router)
-
-
-
-#forum_posts
-@app.post("/forum_posts/", response_model=schemas.Forum_postCreate)
-def create_forum_post(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_post: schemas.Forum_postCreate, db: Session = Depends(get_db)):
-    crud.create_forum_post(db=db, forum_post=forum_post)
-    return 0
-@app.get("/forum_posts/", response_model=list[schemas.Forum_post])
-def read_forum_posts(current_user: Annotated[schemas.User, Depends(get_current_user)], skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    forums = crud.get_forum_posts(db, skip=skip, limit=limit)
-    return forums
-@app.get("/forum_post/{forum_post_id}", response_model=schemas.Forum_post)
-def read_forum_post(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_post_id: int, db: Session = Depends(get_db)):
-    db_forum_post = crud.get_forum_post(db, forum_post_id=forum_post_id)
-    if db_forum_post is None:
-        raise HTTPException(status_code=404, detail="Forum_post not found")
-    return db_forum_post
-@app.put("/forum_posts/{forum_post_id}", response_model=schemas.Forum_post)
-def update_forum_post(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_post: schemas.Forum_postUpdate, db: Session = Depends(get_db)):
-    db_forum_post = crud.get_forum_post(db, forum_post_id=forum_post.forum_post_id)
-    return crud.update_forum_post(db=db, forum_post=forum_post)
-@app.delete("/forum_posts/{forum_post_id}", response_model=schemas.Forum_post)
-def delete_forum_post(current_user: Annotated[schemas.User, Depends(get_current_user)], forum_post_id: int, db: Session = Depends(get_db)):
-    db_forum_post = crud.delete_forum_post(db, forum_post_id=forum_post_id)
-    return db_forum_post
+app.include_router(forum_posts_router)
 
