@@ -38,10 +38,10 @@ def read_category(current_user: Annotated[User, Depends(get_current_user)], cate
     return db_category
 @category_router.put("/categories/{category_id}", response_model=category_schemas.Category)
 def update_category(current_user: Annotated[User, Depends(get_current_user)], category: category_schemas.CategoryUpdate, db: Session = Depends(get_db)):
-    db_category = crud.get_category_by_name(db, category_name=category.category_name)
+    db_category = category_crud.get_category_by_name(db, category_name=category.category_name)
     #if db_category:
         #raise HTTPException(status_code=400, detail="Email already registered")
-    return crud.update_category(db=db, category=category)
+    return category_crud.update_category(db=db, category=category)
 @category_router.delete("/categories/{category_id}", response_model=category_schemas.Category)
 def delete_category(current_user: Annotated[User, Depends(get_current_user)], category_id: int, db: Session = Depends(get_db)):
     db_category = category_crud.delete_category(db, category_id=category_id)
