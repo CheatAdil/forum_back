@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 from my_package.cruds.user_crud import get_user_by_email
 from my_package.entities import tokens
-from my_package.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token
+from auths.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token
 from my_package.database import get_db
 
 token_router = APIRouter(

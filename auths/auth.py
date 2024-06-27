@@ -2,9 +2,9 @@ from datetime import datetime, timedelta, timezone
 from typing import Union
 
 from auths import password_handler
-from .entities.e_schemas import user_schemas
-from .cruds.user_crud import get_user_by_email
-from .environment_variables import get_var
+from my_package.entities.e_schemas import user_schemas
+from my_package.cruds.user_crud import get_user_by_email
+from my_package.environment_variables import get_var
 
 import jwt
 from fastapi.security import OAuth2PasswordBearer
