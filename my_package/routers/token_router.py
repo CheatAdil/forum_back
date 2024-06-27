@@ -7,7 +7,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from cruds.user_crud import get_user_by_email
-from my_package.entities import tokens
+from entities import tokens
 from auths.auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token
 from my_package.database import get_db
 

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from my_package.entities import models
-from my_package.entities.e_schemas import user_schemas
+from entities import models
+from entities.schemas import user_schemas
 from auths.password_handler import get_password_hash
 from . import forum_and_admin_crud
 

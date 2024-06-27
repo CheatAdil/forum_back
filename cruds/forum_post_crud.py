@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from my_package.entities import models
-from my_package.entities.e_schemas import forum_post_schemas
+from entities import models
+from entities.schemas import forum_post_schemas
 
 
 def get_forum_post(db: Session, forum_post_id: int): #
