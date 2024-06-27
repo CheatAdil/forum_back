@@ -8,7 +8,7 @@ from cruds import user_crud
 from entities.schemas import user_schemas
 
 from auths.get_current_user import get_current_user
-from database import get_db
+from my_package.database import get_db
 
 user_router = APIRouter(
     prefix="/users", tags=["user"]
