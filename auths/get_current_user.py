@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from entities import tokens
 from entities.schemas import user_schemas
 from cruds.user_crud import get_user_by_email
-from my_package.environment_variables import get_var
+from environment_variables import get_var
 
 import jwt
 from fastapi.security import OAuth2PasswordBearer
