@@ -8,7 +8,7 @@ from my_package.cruds import forum_post_crud
 from my_package.entities.e_schemas import forum_post_schemas
 from my_package.entities.e_schemas.user_schemas import User
 
-from my_package.auth import get_current_user
+from auths.get_current_user import get_current_user
 from my_package.database import get_db
 
 forum_posts_router = APIRouter(

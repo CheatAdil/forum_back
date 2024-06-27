@@ -8,7 +8,7 @@ from my_package.cruds import category_crud
 from my_package.entities.e_schemas import category_schemas
 from my_package.entities.e_schemas.user_schemas import User
 
-from my_package.auth import get_current_user
+from auths.get_current_user import get_current_user
 from my_package.database import get_db
 
 category_router = APIRouter(

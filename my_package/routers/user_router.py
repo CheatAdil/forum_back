@@ -8,7 +8,7 @@ from my_package.cruds import user_crud
 from my_package.entities import models
 from my_package.entities.e_schemas import user_schemas
 
-from my_package.auth import get_current_user
+from auths.get_current_user import get_current_user
 from my_package.database import get_db
 
 user_router = APIRouter(
