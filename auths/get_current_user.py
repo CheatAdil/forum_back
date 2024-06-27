@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from my_package.entities import tokens
 from my_package.entities.e_schemas import user_schemas
-from my_package.cruds.user_crud import get_user_by_email
+from cruds.user_crud import get_user_by_email
 from my_package.environment_variables import get_var
 
 import jwt
