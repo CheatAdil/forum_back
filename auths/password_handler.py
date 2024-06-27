@@ -1,4 +1,4 @@
-from auths import hash
+from . import hash
 
 
 def get_password_hash(password):
