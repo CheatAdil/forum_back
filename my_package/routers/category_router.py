@@ -4,7 +4,7 @@ from fastapi import Depends, HTTPException, APIRouter
 
 from sqlalchemy.orm import Session
 
-from my_package.cruds import category_crud
+from cruds import category_crud
 from my_package.entities.e_schemas import category_schemas
 from my_package.entities.e_schemas.user_schemas import User
 
