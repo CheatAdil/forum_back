@@ -9,7 +9,7 @@ from entities.schemas import forum_and_admin_schemas
 from entities.schemas.user_schemas import User
 
 from auths.get_current_user import get_current_user
-from my_package.database import get_db
+from database import get_db
 
 forums_and_admins_router = APIRouter(
     prefix="/forums_and_admins", tags=["forums_and_admins"]
