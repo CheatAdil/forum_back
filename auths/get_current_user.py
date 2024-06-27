@@ -10,7 +10,7 @@ import jwt
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 
-from my_package.database import get_db
+from database import get_db
 
 SECRET_KEY = get_var("SECRET_KEY")
 ALGORITHM = get_var("ALGORITHM")
