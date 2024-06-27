@@ -1,4 +1,4 @@
-from auth import hash
+from . import hash
 
 
 
