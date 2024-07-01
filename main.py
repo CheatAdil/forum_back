@@ -1,5 +1,6 @@
-from fastapi import FastAPI, WebSocket
-from fastapi.responses import HTMLResponse
+'''
+
+from fastapi import FastAPI
 
 
 from routers.user_router import user_router
@@ -22,6 +23,13 @@ app.include_router(forum_posts_router)
 
 
 
+'''
+
+
+from fastapi import FastAPI, WebSocket
+from fastapi.responses import HTMLResponse
+
+app = FastAPI()
 
 html = """
 <!DOCTYPE html>
