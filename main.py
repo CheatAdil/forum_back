@@ -1,5 +1,3 @@
-'''
-
 from fastapi import FastAPI
 
 
@@ -23,7 +21,7 @@ app.include_router(forum_posts_router)
 
 
 
-'''
+
 
 
 from fastapi import FastAPI, WebSocket
