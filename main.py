@@ -1,3 +1,5 @@
+'''
+
 from fastapi import FastAPI
 
 
@@ -19,7 +21,7 @@ app.include_router(forums_and_admins_router)
 app.include_router(forum_posts_router)
 #app.include_router(websocket_chat_router)
 
-
+'''
 
 
 
@@ -64,7 +66,7 @@ html = """
 """
 
 
-@app.get("/")
+@app.get("/chat")
 async def get():
     return HTMLResponse(html)
 
