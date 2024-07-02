@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from entities import models
-from entities.schemas import forum_and_admin_schemas
+from .entities import models
+from .entities.schemas import forum_and_admin_schemas
 
 #forum and admin
 def get_forum_and_admin(db: Session, forum_and_admin_id: int): #
