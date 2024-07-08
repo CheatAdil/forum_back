@@ -4,7 +4,7 @@ from fastapi import Depends, HTTPException, APIRouter
 
 from sqlalchemy.orm import Session
 
-from .cruds import user_crud
+from cruds import user_crud
 from .entities.schemas import user_schemas
 
 from .auths.get_current_user import get_current_user
