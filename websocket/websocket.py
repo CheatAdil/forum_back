@@ -5,7 +5,7 @@ app = FastAPI()
 
 
 websocket_chat_router = APIRouter(
-    prefix="/users", tags=["user"]
+    prefix="/chatt", tags=["chatt"]
 )
 
 html = """

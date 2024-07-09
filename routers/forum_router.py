@@ -4,12 +4,12 @@ from fastapi import Depends, HTTPException, APIRouter
 
 from sqlalchemy.orm import Session
 
-from .cruds import forum_crud
-from .entities.schemas import forum_schemas
-from .entities.schemas.user_schemas import User
+from ..cruds import forum_crud
+from ..entities.schemas import forum_schemas
+from ..entities.schemas.user_schemas import User
 
-from .auths.get_current_user import get_current_user
-from .database import get_db
+from ..auths.get_current_user import get_current_user
+from ..database import get_db
 
 forum_router = APIRouter(
     prefix="/forums", tags=["forum"]

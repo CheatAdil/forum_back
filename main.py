@@ -24,7 +24,7 @@ app.include_router(forum_posts_router)
 
 
 
-
+'''
 
 from fastapi import FastAPI, WebSocket
 from fastapi.responses import HTMLResponse
@@ -77,3 +77,6 @@ async def websocket_endpoint(websocket: WebSocket):
     while True:
         data = await websocket.receive_text()
         await websocket.send_text(f"Message text was: {data}")
+
+
+        '''

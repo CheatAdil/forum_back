@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from .entities import models
-from .entities.schemas import category_schemas
+from ..entities import models
+from ..entities.schemas import category_schemas
 from . import forum_crud
 
 

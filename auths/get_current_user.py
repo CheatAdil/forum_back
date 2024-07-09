@@ -1,16 +1,16 @@
 from typing import Annotated
 from sqlalchemy.orm import Session
 
-from .entities import tokens
-from .entities.schemas import user_schemas
-from .cruds.user_crud import get_user_by_email
-from .environment_variables import get_var
+from ..entities import tokens
+from ..entities.schemas import user_schemas
+from ..cruds.user_crud import get_user_by_email
+from ..environment_variables import get_var
 
 import jwt
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 
-from database import get_db
+from ..database import get_db
 
 SECRET_KEY = get_var("SECRET_KEY")
 ALGORITHM = get_var("ALGORITHM")
