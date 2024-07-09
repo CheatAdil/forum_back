@@ -5,7 +5,7 @@ app = FastAPI()
 
 
 websocket_chat_router = APIRouter(
-    prefix="/chatt", tags=["chatt"]
+    prefix="", tags=["chat"]
 )
 
 html = """
@@ -43,7 +43,7 @@ html = """
 """
 
 
-@websocket_chat_router.get("/")
+@websocket_chat_router.get("/chat")
 async def get():
     return HTMLResponse(html)
 
