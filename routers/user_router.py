@@ -17,8 +17,8 @@ user_router = APIRouter(
 #users
 
 @user_router.get("/me")
-async def read_users_me(current_user: Annotated[user_schemas.User, Depends(get_current_user)]):
-    return current_user.id
+async def read_user_me(current_user: Annotated[user_schemas.User, Depends(get_current_user)]):
+    return current_user.user_id
 
 @user_router.post("/", response_model=user_schemas.User)
 def create_user(current_user: Annotated[user_schemas.User, Depends(get_current_user)], user: user_schemas.UserCreate, db: Session = Depends(get_db) ):
