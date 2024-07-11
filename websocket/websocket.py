@@ -1,6 +1,6 @@
 from fastapi import FastAPI, WebSocket, APIRouter, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
-#from ..routers.user_router import read_user_me
+from ..routers.user_router import read_user_me
 
 
 websocket_chat_router = APIRouter(
