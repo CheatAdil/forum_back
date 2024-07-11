@@ -1,5 +1,7 @@
 from fastapi import FastAPI, WebSocket, APIRouter, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
+#from ..routers.user_router import read_user_me
+
 
 websocket_chat_router = APIRouter(
     prefix="", tags=["chat"]
@@ -82,7 +84,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     try: 
         while True:
             data = await websocket.receive_text()
-            await manager.send_personal_message(f"You wrote: {data}", websocket)
+            #await manager.send_personal_message(f"You wrote: {data} Your id: {read_user_me()}", websocket)
             await manager.broadcast(f"Client #{client_id} says: {data}")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
