@@ -19,6 +19,6 @@ app.include_router(category_router)
 app.include_router(forum_router)
 app.include_router(forums_and_admins_router)
 app.include_router(forum_posts_router)
-#app.include_router(websocket_chat_router)
+app.include_router(websocket_chat_router)
 
 
