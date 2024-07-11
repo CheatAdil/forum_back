@@ -1,13 +1,12 @@
 from typing import Optional, Annotated, Dict
 
 from fastapi import Request, HTTPException
-from fastapi.openapi.models import OAuthFlow
+from fastapi.openapi.models import OAuthFlows as OAuthFlowsModel
 
 from fastapi.security import OAuth2
 from fastapi.security.utils import get_authorization_scheme_param
 
 HTTP_401_UNAUTHORIZED = 401
-
 
 class OAuth2PasswordBearerWithCookie(OAuth2):
     def __init__(
@@ -19,7 +18,7 @@ class OAuth2PasswordBearerWithCookie(OAuth2):
     ):
         if not scopes:
             scopes = {}
-        flows = OAuthFlow(password={"tokenUrl": tokenUrl, "scopes": scopes})
+        flows = OAuthFlowsModel(password={"tokenUrl": tokenUrl, "scopes": scopes})
         super().__init__(flows=flows, scheme_name=scheme_name, auto_error=auto_error)
 
     async def __call__(self, request: Request) -> Optional[str]:

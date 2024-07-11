@@ -19,7 +19,7 @@ CRYPT_SCHEME = get_var("CRYPT_SCHEME")
 
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl="token")
 
 def get_user(db, user_name: str, ):
     

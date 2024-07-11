@@ -16,7 +16,7 @@ from ..database import get_db
 SECRET_KEY = get_var("SECRET_KEY")
 ALGORITHM = get_var("ALGORITHM")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl="token")
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
     print("get current user")
