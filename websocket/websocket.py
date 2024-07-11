@@ -1,11 +1,38 @@
-from fastapi import FastAPI, WebSocket, APIRouter, WebSocketDisconnect
+from typing import Annotated
+
+from fastapi import FastAPI, WebSocket, APIRouter, WebSocketDisconnect, Depends
 from fastapi.responses import HTMLResponse
-from ..routers.user_router import read_user_me
+from ..auths.get_current_user import get_current_user
+from ..entities.schemas import user_schemas
+
+from ..routers.token_router import login_for_access_token
 
 
 websocket_chat_router = APIRouter(
     prefix="", tags=["chat"]
 )
+
+"""
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
+
+"""
+
 
 html = """
 <!DOCTYPE html>
@@ -51,6 +78,11 @@ html = """
 </html>
 """
 
+@websocket_chat_router.get("/me")
+async def read_user_me(current_user: Annotated[user_schemas.User, Depends(get_current_user)]):
+    return current_user.user_name
+
+
 class ConnectionManager:
     def __init__(self):
         self.active_connections: list[WebSocket] = []
@@ -80,13 +112,15 @@ async def get():
 
 @websocket_chat_router.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
+    login_for_access_token(a)
+    
     await manager.connect(websocket)
+
     try: 
         while True:
             data = await websocket.receive_text()
-            #await manager.send_personal_message(f"You wrote: {data} Your id: {read_user_me()}", websocket)
+            await manager.send_personal_message(f"You wrote: {data} Your id: {2}", websocket)
             await manager.broadcast(f"Client #{client_id} says: {data}")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
         await manager.broadcast(f"Client #{client_id} has left the chat")
-

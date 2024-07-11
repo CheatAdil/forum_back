@@ -8,6 +8,7 @@ from ..environment_variables import get_var
 
 import jwt
 from fastapi.security import OAuth2PasswordBearer
+from ..auths.password_bearer import OAuth2PasswordBearerWithCookie
 from fastapi import Depends, HTTPException, status
 
 from ..database import get_db
