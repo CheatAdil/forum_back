@@ -1,7 +1,10 @@
-from fastapi import FastAPI, WebSocket, APIRouter, WebSocketDisconnect
+from typing import Annotated
+
+from fastapi import FastAPI, WebSocket, APIRouter, WebSocketDisconnect, Depends
 from fastapi.responses import HTMLResponse
 from ..routers.user_router import read_user_me
-
+from ..entities.schemas import user_schemas
+from ..auths.get_current_user import get_current_user
 
 websocket_chat_router = APIRouter(
     prefix="", tags=["chat"]
@@ -90,3 +93,6 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
         manager.disconnect(websocket)
         await manager.broadcast(f"Client #{client_id} has left the chat")
 
+@websocket_chat_router.get("/me")
+async def read_user_me(current_user: Annotated[user_schemas.User, Depends(get_current_user)]):
+    return current_user.user_name
