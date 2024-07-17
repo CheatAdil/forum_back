@@ -22,7 +22,7 @@ html = """
     <body>
     <div class="container mt-3">
         <h1>FastAPI WebSocket Chat</h1>
-        <h2>Your ID: <span id="ws-id"></span></h2>
+        <h2>Your name: <span id="ws-id"></span></h2>
         <form action="" onsubmit="sendMessage(event)">
             <input type="text" class="form-control" id="messageText" autocomplete="off"/>
             <button class="btn btn-outline-primary mt-2">Send</button>
@@ -33,7 +33,28 @@ html = """
     </div>
     
         <script>
-            var client_id = Date.now()
+            function getCookie(cname)
+            {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for(let i = 0; i <ca.length; i++)
+                {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ')
+                    {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0)
+                    {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+        
+        
+            var client_id = getCookie("username")
             document.querySelector("#ws-id").textContent = client_id;
             var ws = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
             ws.onmessage = function(event) {
@@ -49,6 +70,14 @@ html = """
                 input.value = ''
                 event.preventDefault()
             }
+            function httpGet(theUrl)
+            {
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+                xmlHttp.send( null );
+                return xmlHttp.responseText;
+            }
+            
         </script>
     </body>
 </html>
@@ -82,16 +111,16 @@ async def get():
 
 
 @websocket_chat_router.websocket("/ws/{client_id}")
-async def websocket_endpoint(websocket: WebSocket, client_id: int):
+async def websocket_endpoint(websocket: WebSocket, client_id: str):
     await manager.connect(websocket)
     try: 
         while True:
             data = await websocket.receive_text()
             #await manager.send_personal_message(f"You wrote: {data} Your id: {read_user_me()}", websocket)
-            await manager.broadcast(f"Client #{client_id} says: {data}")
+            await manager.broadcast(f"{client_id}: {data}")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
-        await manager.broadcast(f"Client #{client_id} has left the chat")
+        await manager.broadcast(f"{client_id} has left the chat")
 
 @websocket_chat_router.get("/me")
 async def read_user_me(current_user: Annotated[user_schemas.User, Depends(get_current_user)]):
