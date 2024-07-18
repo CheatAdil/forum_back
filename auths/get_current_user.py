@@ -1,21 +1,22 @@
 from typing import Annotated
 from sqlalchemy.orm import Session
 
-from entities import tokens
-from entities.schemas import user_schemas
-from cruds.user_crud import get_user_by_email
-from environment_variables import get_var
+from ..entities import tokens
+from ..entities.schemas import user_schemas
+from ..cruds.user_crud import get_user_by_email
+from ..environment_variables import get_var
 
 import jwt
 from fastapi.security import OAuth2PasswordBearer
+from ..auths.password_bearer import OAuth2PasswordBearerWithCookie
 from fastapi import Depends, HTTPException, status
 
-from database import get_db
+from ..database import get_db
 
 SECRET_KEY = get_var("SECRET_KEY")
 ALGORITHM = get_var("ALGORITHM")
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl="token")
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
     print("get current user")

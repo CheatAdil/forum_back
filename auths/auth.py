@@ -1,10 +1,12 @@
 from datetime import datetime, timedelta, timezone
 from typing import Union
 
-from auths import password_handler
-from entities.schemas import user_schemas
-from cruds.user_crud import get_user_by_email
-from environment_variables import get_var
+from ..auths import password_handler
+from ..entities.schemas import user_schemas
+from ..cruds.user_crud import get_user_by_email
+from ..environment_variables import get_var
+from ..auths.password_bearer import OAuth2PasswordBearerWithCookie
+
 
 import jwt
 from fastapi.security import OAuth2PasswordBearer
@@ -15,7 +17,9 @@ ACCESS_TOKEN_EXPIRE_MINUTES = int(get_var("ACCESS_TOKEN_EXPIRE_MINUTES"))
 CRYPT_SCHEME = get_var("CRYPT_SCHEME")
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+oauth2_scheme = OAuth2PasswordBearerWithCookie(tokenUrl="token")
 
 def get_user(db, user_name: str, ):
     
