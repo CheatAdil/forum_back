@@ -54,7 +54,7 @@ html = """
             }
 
             var client_id = httpGet("http://127.0.0.1:8000/users/me")
-            var client_id = getCookie("username");
+            ///var client_id = getCookie("username");
             document.querySelector("#ws-id").textContent = client_id;
             var ws = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
             ws.onmessage = function(event) {
