@@ -1,6 +1,9 @@
 
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 
 from .routers.user_router import user_router
