@@ -16,6 +16,21 @@ from .websocket.websocket import websocket_chat_router
 
 app = FastAPI()
 
+origins = [
+    "http://127.0.0.1",
+    "https://127.0.0.1",
+    "http://127.0.0.1:8000",
+    "https://127.0.0.1:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(token_router)
 app.include_router(user_router)
 app.include_router(category_router)
