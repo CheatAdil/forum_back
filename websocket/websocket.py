@@ -53,7 +53,7 @@ html = """
                 return "";
             }
 
-            var client_id = httpGet("http://127.0.0.1:8000/me")
+            var client_id = httpGet("http://3.138.247.247:8000/me")
             ///var client_id = getCookie("username");
             ///var client_id = 124
             document.querySelector("#ws-id").textContent = client_id;
