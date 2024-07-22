@@ -32,6 +32,5 @@ async def login_for_access_token(response: Response,
     access_token = create_access_token(
         data={"sub": user.user_email}, expires_delta=access_token_expires
     )
-    response.set_cookie(key="access_token",value=f"Bearer {access_token}", httponly=True)
-    response.set_cookie(key="username",value=form_data.username, httponly=False)
+    response.set_cookie(key="access_token",value=f"Bearer {access_token}", httponly=False)
     return tokens.Token(access_token=access_token, token_type="bearer")
