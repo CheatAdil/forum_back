@@ -53,11 +53,11 @@ html = """
                 return "";
             }
 
-            var client_id = httpGet("http://3.138.247.247/me")
+            var client_id = httpGet("http://3.138.247.247/users/me")
             ///var client_id = getCookie("username");
             ///var client_id = 124
             document.querySelector("#ws-id").textContent = client_id;
-            var ws = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
+            var ws = new WebSocket(`ws://3.138.247.247/ws/${client_id}`);
             ws.onmessage = function(event) {
                 var messages = document.getElementById('messages')
                 var message = document.createElement('li')
