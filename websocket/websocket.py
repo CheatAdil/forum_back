@@ -22,7 +22,7 @@ html = """
     <body>
     <div class="container mt-3">
         <h1>FastAPI WebSocket Chat</h1>
-        <h2>Your name: <span id="ws-id"></span></h2>
+        <h2>Your ID: <span id="ws-id"></span></h2>
         <form action="" onsubmit="sendMessage(event)">
             <input type="text" class="form-control" id="messageText" autocomplete="off"/>
             <button class="btn btn-outline-primary mt-2">Send</button>
@@ -33,7 +33,7 @@ html = """
     </div>
     
         <script>
-            function getCookie(cname)
+        function getCookie(cname)
             {
                 let name = cname + "=";
                 let decodedCookie = decodeURIComponent(document.cookie);
@@ -52,12 +52,17 @@ html = """
                 }
                 return "";
             }
-
-            var client_id = httpGet("http://3.138.247.247/users/me")
-            ///var client_id = getCookie("username");
-            ///var client_id = 124
+            function httpGet(theUrl)
+            {
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+                xmlHttp.send( null );
+                return xmlHttp.responseText;
+            }
+            ///var client_id = httpGet("http://3.138.247.247/me")
+            var client_id = Date.now()
             document.querySelector("#ws-id").textContent = client_id;
-            var ws = new WebSocket(`ws://localhost:8000/ws/${client_id}`);
+            var ws = new WebSocket(`ws://127.0.0.1:8000/ws/${client_id}`);
             ws.onmessage = function(event) {
                 var messages = document.getElementById('messages')
                 var message = document.createElement('li')
@@ -71,14 +76,6 @@ html = """
                 input.value = ''
                 event.preventDefault()
             }
-            function httpGet(theUrl)
-            {
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
-                xmlHttp.send( null );
-                return xmlHttp.responseText;
-            }
-            
         </script>
     </body>
 </html>
@@ -112,17 +109,15 @@ async def get():
 
 
 @websocket_chat_router.websocket("/ws/{client_id}")
-async def websocket_endpoint(websocket: WebSocket, client_id: str):
+async def websocket_endpoint(websocket: WebSocket, client_id: int):
     await manager.connect(websocket)
     try: 
         while True:
             data = await websocket.receive_text()
-            #await manager.send_personal_message(f"You wrote: {data} Your id: {read_user_me()}", websocket)
-            await manager.broadcast(f"{client_id}: {data}")
+            await manager.send_personal_message(f"You wrote: {data}", websocket)
+            await manager.broadcast(f"Client #{client_id} says: {data}")
     except WebSocketDisconnect:
         manager.disconnect(websocket)
-        await manager.broadcast(f"{client_id} has left the chat")
+        await manager.broadcast(f"Client #{client_id} has left the chat")
 
-@websocket_chat_router.get("/me")
-async def read_user_me(current_user: Annotated[user_schemas.User, Depends(get_current_user)]):
-    return current_user.user_name
+
